@@ -1,0 +1,56 @@
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.96.2
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_docs
+      - id: tfupdate
+        name: Autoupdate Terraform versions of stacks
+        args:
+          - --args=terraform
+          - --args=--version "~> 1.16.5"
+      - id: tfupdate
+        name: Autoupdate helm provider
+        args:
+          - --args=provider helm
+          - --args=--version ">= 3.3, < 4"
+      - id: terraform_trivy
+      - id: terraform_validate
+        args:
+          - --init-args=-backend=false
+          - --init-args=-lockfile=readonly
+      - id: terraform_checkov
+      - id: terraform_tflint
+        args:
+          - "--args=--only=terraform_deprecated_interpolation"
+          - "--args=--only=terraform_deprecated_index"
+          - "--args=--only=terraform_unused_declarations"
+          - "--args=--only=terraform_comment_syntax"
+          - "--args=--only=terraform_documented_outputs"
+          - "--args=--only=terraform_documented_variables"
+          - "--args=--only=terraform_typed_variables"
+          - "--args=--only=terraform_module_pinned_source"
+          - "--args=--only=terraform_naming_convention"
+          - "--args=--only=terraform_required_version"
+          - "--args=--only=terraform_required_providers"
+          - "--args=--only=terraform_standard_module_structure"
+          - "--args=--only=terraform_workspace_remote"
+  - repo: meta
+    hooks:
+      #- id: check-hooks-apply
+      - id: check-useless-excludes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0 # Use the ref you want to point at
+    hooks:
+      - id: trailing-whitespace
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+        exclude: helm/greeter/templates
+      - id: detect-private-key
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 3.0.0
+    hooks:
+      - id: shfmt
+      - id: shellcheck
