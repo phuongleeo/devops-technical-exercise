@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "greeter.fullname" . }}
+  labels:
+    {{- include "greeter.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "greeter.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      # Never take a pod down before the replacement is ready.
+      # Combined with the readiness probe this gives zero-downtime rollouts.
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        {{- include "greeter.selectorLabels" . | nindent 8 }}
+    spec:
+      # Spread pods across worker nodes so the service survives a single-node loss.
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              {{- include "greeter.selectorLabels" . | nindent 14 }}
+      # terminationGracePeriodSeconds must exceed shutdownDelaySeconds + drainTimeoutSeconds.
+      # Default values: 10 + 20 = 30, plus 5s buffer = 35.
+      terminationGracePeriodSeconds: 35
+      containers:
+        - name: greeter
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: GREETING_NAME
+              value: {{ .Values.greeting.name | quote }}
+            - name: PORT
+              value: "8080"
+            - name: VERSION
+              value: {{ .Values.version | quote }}
+            - name: WARMUP_SECONDS
+              value: {{ .Values.warmupSeconds | quote }}
+            - name: SHUTDOWN_DELAY_SECONDS
+              value: {{ .Values.shutdownDelaySeconds | quote }}
+            - name: DRAIN_TIMEOUT_SECONDS
+              value: {{ .Values.drainTimeoutSeconds | quote }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            # Start checking after 5s; the process binds immediately so this is generous.
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            # failureThreshold: 1 — the service signals not-ready immediately on SIGTERM,
+            # so one failed check is enough to stop routing traffic to it.
+            failureThreshold: 1
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65532
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true

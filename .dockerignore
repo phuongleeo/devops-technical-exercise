@@ -1,0 +1,5 @@
+.git
+cluster/
+helm/
+terraform/
+*.md

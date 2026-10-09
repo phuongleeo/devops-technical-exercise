@@ -1,0 +1,12 @@
+Greeter is deployed.
+
+  Release:  {{ .Release.Name }}
+  Replicas: {{ .Values.replicaCount }}
+  Name:     {{ .Values.greeting.name }}
+
+Access the service (kind port-mapping exposes NodePort {{ .Values.service.nodePort }} on host port {{ .Values.service.port }}):
+  curl http://localhost:{{ .Values.service.port }}/
+  curl http://localhost:{{ .Values.service.port }}/healthz
+  curl http://localhost:{{ .Values.service.port }}/readyz
+  curl http://localhost:{{ .Values.service.port }}/version
+  curl http://localhost:{{ .Values.service.port }}/metrics
