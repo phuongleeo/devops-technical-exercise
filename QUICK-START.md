@@ -13,10 +13,10 @@ cd cluster ; ./setup.sh
 cd terraform
 # DEV: this also install argocd + prometheus server
    # first time, we need argocd deployed first, to have CRDs available
-  ./run-local.sh dev -target helm_release.argocd
-  ./run-local.sh dev
+  ./run-local.sh dev -target helm_release.argocd; terraform apply dev.plan
+  ./run-local.sh dev; terraform apply dev.plan
 # PROD:
-  ./run-local.sh prod
+  ./run-local.sh prod; terraform apply prod.plan
 
 ```
 
