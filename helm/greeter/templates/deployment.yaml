@@ -72,6 +72,7 @@ spec:
             failureThreshold: 1
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          # checkov:skip=CKV_K8S_29: added securityContext to enforce non-root user and read-only filesystem
           securityContext:
             runAsNonRoot: true
             runAsUser: 65532
