@@ -7,7 +7,7 @@ image:
   pullPolicy: Never
 
 greeting:
-  name: ""  # required — must be set per environment
+  name: "" # required — must be set per environment
 
 version: dev
 

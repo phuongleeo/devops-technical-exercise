@@ -1,0 +1,39 @@
+# Disable components we don't need.
+prometheus-pushgateway:
+  enabled: false
+prometheus-node-exporter:
+  enabled: false
+alertmanager:
+  enabled: true
+rbac:
+  create: true
+serviceAccounts:
+  server:
+    create: true
+server:
+  global:
+    scrape_interval: 15s
+    evaluation_interval: 15s
+  service:
+    type: NodePort
+    nodePort: 30083
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: greeter
+        rules:
+          - alert: GreeterHighErrorRate
+            # Fire when the greeter is returning 500s at more than 0.1 req/s
+            # over a 5-minute window, sustained for 1 minute.
+            # Trigger on demand: curl http://localhost:8080/boom
+            expr: |
+              rate(greeter_http_requests_total{status="500"}[5m]) > 0.1
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Greeter is returning 500 errors"
+              description: >
+                The greeter service is returning HTTP 500 responses at
+                {{ $value | humanize }} req/s (threshold: 0.1 req/s).
+                Hit /boom to trigger this alert on demand.

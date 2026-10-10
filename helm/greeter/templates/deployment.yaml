@@ -20,6 +20,10 @@ spec:
     metadata:
       labels:
         {{- include "greeter.selectorLabels" . | nindent 8 }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
       # Spread pods across worker nodes so the service survives a single-node loss.
       # Can be replaced by podAntiAffinity, but that is more complex and not needed for this simple service.

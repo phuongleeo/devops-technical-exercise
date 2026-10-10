@@ -13,6 +13,14 @@ nodes:
       - containerPort: 30081
         hostPort: 8081
         protocol: TCP
+      # ArgoCD
+      - containerPort: 30082
+        hostPort: 8082
+        protocol: TCP
+      # Prometheus
+      - containerPort: 30083
+        hostPort: 9090
+        protocol: TCP
   - role: worker
     image: kindest/node:v1.37.0
   - role: worker
