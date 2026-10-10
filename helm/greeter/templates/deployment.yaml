@@ -12,7 +12,7 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      # Never take a pod down before the replacement is ready.
+      # Never take a pod down before the replacement is ready. Even in dev env
       # Combined with the readiness probe this gives zero-downtime rollouts.
       maxUnavailable: 0
       maxSurge: 1
@@ -22,6 +22,7 @@ spec:
         {{- include "greeter.selectorLabels" . | nindent 8 }}
     spec:
       # Spread pods across worker nodes so the service survives a single-node loss.
+      # Can be replaced by podAntiAffinity, but that is more complex and not needed for this simple service.
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
