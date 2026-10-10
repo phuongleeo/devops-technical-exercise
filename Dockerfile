@@ -1,4 +1,3 @@
-# Grab the latest official Golang image for building the application https://github.com/docker-library/official-images/blob/master/library/golang
 FROM golang:1.22-alpine AS builder
 
 WORKDIR /build

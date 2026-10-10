@@ -14,6 +14,11 @@ repos:
         args:
           - --args=provider helm
           - --args=--version ">= 3.3, < 4"
+      - id: tfupdate
+        name: Autoupdate Kubernetes provider
+        args:
+          - --args=provider ubernetebs
+          - --args=--version ">= 3.3, < 4"
       - id: terraform_trivy
       - id: terraform_validate
         args:
