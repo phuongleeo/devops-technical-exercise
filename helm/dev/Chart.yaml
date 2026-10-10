@@ -3,7 +3,6 @@ name: greeter-dev
 description: greeter dev env
 type: application
 version: 0.1.0
-appVersion: "dev"
 dependencies:
   - name: greeter
     repository: file://../greeter/
