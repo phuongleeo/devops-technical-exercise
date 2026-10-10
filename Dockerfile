@@ -1,4 +1,3 @@
-# checkov:skip=CKV_DOCKER_2: "Ensure that HEALTHCHECK instructions have been added to container images"
 # Grab the latest official Golang image for building the application https://github.com/docker-library/official-images/blob/master/library/golang
 FROM golang:1.22-alpine AS builder
 
