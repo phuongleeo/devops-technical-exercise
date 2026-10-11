@@ -48,7 +48,7 @@ resource "kubernetes_manifest" "greeter_dev" {
 
       source = {
         repoURL        = "https://github.com/phuongleeo/devops-technical-exercise"
-        targetRevision = "solution"
+        targetRevision = "gitops"
         path           = "helm/dev"
         helm = {
           valueFiles = ["values.yaml"]
@@ -91,7 +91,7 @@ resource "kubernetes_manifest" "greeter_prod" {
 
       source = {
         repoURL        = "https://github.com/phuongleeo/devops-technical-exercise"
-        targetRevision = "solution"
+        targetRevision = "gitops"
         path           = "helm/prod"
         helm = {
           valueFiles = ["values.yaml"]

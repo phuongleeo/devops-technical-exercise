@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: ["main"]
+    branches: ["gitops"]
     paths:
-      - 'app/**'
+      - "app/**"
   pull_request:
     branches: ["main"]
 
@@ -35,7 +35,7 @@ jobs:
   publish-and-release:
     name: Build Image & Create Release PR
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/gitops'
     runs-on: ubuntu-latest
     permissions:
       contents: write
