@@ -1,0 +1,9 @@
+greeter:
+  replicaCount: 2
+  greeting:
+    name: "World"
+  version: prod
+  service:
+    type: NodePort
+    port: 8081
+    nodePort: 30081

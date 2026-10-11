@@ -1,0 +1,9 @@
+apiVersion: v2
+name: greeter-prod
+description: greeter prod env
+type: application
+version: 0.1.0
+dependencies:
+  - name: greeter
+    repository: file://../greeter/
+    version: 0.x.x

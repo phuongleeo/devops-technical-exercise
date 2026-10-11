@@ -1,0 +1,29 @@
+replicaCount: 2
+
+image:
+  repository: greeter
+  tag: local
+  # Never: image is loaded directly into kind nodes, no registry needed
+  pullPolicy: Never
+
+greeting:
+  name: "" # required — must be set per environment
+
+version: dev
+
+warmupSeconds: 30
+shutdownDelaySeconds: 10
+drainTimeoutSeconds: 20
+
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30080
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 32Mi
+  limits:
+    cpu: 200m
+    memory: 64Mi

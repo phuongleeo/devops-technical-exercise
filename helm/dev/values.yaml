@@ -1,0 +1,5 @@
+greeter:
+  replicaCount: 1
+  greeting:
+    name: "Developer"
+  version: dev
