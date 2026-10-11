@@ -47,13 +47,13 @@ No modules.
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.greeter](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.prometheus](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
-| [kubernetes_manifest.greeter_dev](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
-| [kubernetes_manifest.greeter_prod](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
+| [kubernetes_manifest.greeter](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_enabled_gitops"></a> [enabled\_gitops](#input\_enabled\_gitops) | enable gitops | `bool` | `true` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Deployment environment name (dev or prod). | `string` | n/a | yes |
 | <a name="input_greeting_name"></a> [greeting\_name](#input\_greeting\_name) | The name used in the greeting response. | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace to deploy into. | `string` | `"greeter"` | no |
@@ -64,7 +64,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_namespace"></a> [namespace](#output\_namespace) | Kubernetes namespace. |
 | <a name="output_release_name"></a> [release\_name](#output\_release\_name) | Helm release name. |
 | <a name="output_service_url"></a> [service\_url](#output\_service\_url) | URL to access the service (via kind port mapping). |
 <!-- END_TF_DOCS -->

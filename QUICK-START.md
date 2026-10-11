@@ -12,8 +12,9 @@ cd cluster ; ./setup.sh
 ```bash
 cd terraform
 # DEV: this also install argocd + prometheus server
-   # first time, we need argocd deployed first, to have CRDs available
-  ./run-local.sh dev -target helm_release.argocd; terraform apply dev.plan
+# The Greeter app will be deployed via ArgoCD
+# Need to apply this once for the first time deployment
+  ./run-local.sh dev -target helm_release.argocd
   ./run-local.sh dev; terraform apply dev.plan
 # PROD:
   ./run-local.sh prod; terraform apply prod.plan
@@ -39,8 +40,8 @@ cd terraform
 
 ```
 Greeter:
- • DEV: curl http://localhost:8080/
- • PROD: curl http://localhost:8081/
+ • DEV: http://localhost:8080/
+ • PROD: http://localhost:8081/
 Argocd: http://localhost:8082/
 Prometheus: http://localhost:9090/
 ```

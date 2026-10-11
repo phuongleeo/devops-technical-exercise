@@ -30,3 +30,9 @@ variable "node_port" {
   type        = number
   default     = 30080
 }
+
+variable "enabled_gitops" {
+  description = "enable gitops"
+  type        = bool
+  default     = true
+}

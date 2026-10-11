@@ -1,14 +1,15 @@
 output "release_name" {
   description = "Helm release name."
-  value       = helm_release.greeter.name
-}
-
-output "namespace" {
-  description = "Kubernetes namespace."
-  value       = helm_release.greeter.namespace
+  value       = var.enabled_gitops ? "" : helm_release.greeter[0].name
 }
 
 output "service_url" {
   description = "URL to access the service (via kind port mapping)."
-  value       = "http://localhost:${var.environment == "dev" ? 8000 : 8081}/"
+  value       = <<EOF
+      Greeter:
+       • DEV: http://localhost:8080/
+       • PROD: http://localhost:8081/
+      Argocd: http://localhost:8082/
+      Prometheus: http://localhost:9090/
+  EOF
 }
